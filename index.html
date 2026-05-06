@@ -242,7 +242,16 @@
       <div class="settings-grid">
         <div class="settings-card">
           <div class="sc-header">
-            <span class="sc-title">Twilio SMS / WhatsApp Alerts</span>
+            <span class="sc-title">Gemini AI (Free)</span>
+            <span class="sc-badge pending" id="geminiStatus">Not configured</span>
+          </div>
+          <div class="sc-body">
+            <div class="form-row"><label>GEMINI API KEY</label><input id="geminiKey" type="password" placeholder="AIzaSy…"></div>
+            <p class="form-hint">Get your FREE key at <strong>aistudio.google.com</strong> → Get API Key → Create API Key. No credit card needed.</p>
+            <button class="save-btn" id="saveGemini">Save key</button>
+          </div>
+        </div>
+        <div class="settings-card">
             <span class="sc-badge pending" id="twilioStatus">Not configured</span>
           </div>
           <div class="sc-body">
@@ -314,6 +323,7 @@ let log = [];
 let chatMessages = [];
 let isTyping = false;
 let twilio = { sid:'', token:'', from:'', to:'', channel:'sms' };
+let gemini = { key:'' };
 
 // ── Tab switching ──
 document.querySelectorAll('.tab').forEach(t => {
@@ -446,14 +456,20 @@ Rules:
 - If not found: apologize, say dispatch will be notified. End with MISSING: [what they asked for]
 - Be brief, professional, friendly. Address driver by first name.`;
 
+  const geminiKey = document.getElementById('geminiKey')?.value.trim() || gemini.key;
+  if (!geminiKey) {
+    isTyping = false;
+    chatMessages.push({ role:'bot', text:'⚠️ Please add your Gemini API key in the Settings tab first.', html:'⚠️ Please add your Gemini API key in the <b>Settings</b> tab first.' });
+    renderChat(); return;
+  }
   try {
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:800, system:sys, messages:[{role:"user",content:`Driver ${driver.name} says: ${text}`}] })
+      body: JSON.stringify({ contents:[{ parts:[{ text: sys + "\n\nDriver " + driver.name + " says: " + text }] }] })
     });
     const data = await resp.json();
-    const reply = data.content?.[0]?.text || "Sorry, I couldn't process that request.";
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that request.";
 
     const foundM = reply.match(/FOUND:\s*(.+)/i);
     const noLinkM = reply.match(/FOUND_NO_LINK:\s*(.+)/i);
@@ -550,6 +566,13 @@ function saveDriver(){
 function deleteDriver(id){drivers=drivers.filter(d=>d.id!==id);renderDrivers();}
 
 // ── Settings save ──
+document.getElementById('saveGemini').addEventListener('click',()=>{
+  gemini.key = document.getElementById('geminiKey').value.trim();
+  const pill = document.getElementById('geminiStatus');
+  if (gemini.key) { pill.textContent='Configured'; pill.className='sc-badge ok'; }
+  else { pill.textContent='Not configured'; pill.className='sc-badge pending'; }
+});
+
 document.getElementById('saveTwilio').addEventListener('click',()=>{
   twilio.sid=document.getElementById('tSid').value.trim();
   twilio.token=document.getElementById('tToken').value.trim();
