@@ -7,19 +7,22 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0F1117;--surface:#181B24;--surface2:#1E2130;--border:#2A2F42;--border2:#333849;--text:#E8EAF0;--text2:#8B91A8;--text3:#555D74;--accent:#3B82F6;--adim:#1D3E7C;--green:#10B981;--gdim:#052E1C;--red:#EF4444;--rdim:#2E0A0A;--r:10px;--f:'DM Sans',sans-serif;--m:'IBM Plex Mono',monospace}
+:root{--bg:#0F1117;--surface:#181B24;--surface2:#1E2130;--border:#2A2F42;--border2:#333849;--text:#E8EAF0;--text2:#8B91A8;--text3:#555D74;--accent:#3B82F6;--adim:#1D3E7C;--green:#10B981;--gdim:#052E1C;--red:#EF4444;--rdim:#2E0A0A;--yellow:#F59E0B;--ydim:#2E1E04;--r:10px;--f:'DM Sans',sans-serif;--m:'IBM Plex Mono',monospace}
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--f)}
+
+/* ── PORTAL ── */
 .portal{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px}
-.portal-box{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:32px;width:100%;max-width:460px;display:flex;flex-direction:column;gap:20px}
-.portal-logo{display:flex;align-items:center;gap:12px}
-.portal-icon{width:44px;height:44px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:15px;font-weight:500;color:#fff;flex-shrink:0}
-.portal-title{font-size:22px;font-weight:600;letter-spacing:-.02em}
-.portal-sub{font-size:13px;color:var(--text3);font-family:var(--m)}
+.card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:28px;width:100%;max-width:480px;display:flex;flex-direction:column;gap:18px}
+.logo-row{display:flex;align-items:center;gap:12px}
+.logo-icon{width:44px;height:44px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--m);font-size:15px;font-weight:500;color:#fff;flex-shrink:0}
+.logo-title{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.logo-sub{font-size:12px;color:var(--text3);font-family:var(--m)}
 .divider{height:1px;background:var(--border)}
 .field-label{font-size:12px;color:var(--text3);font-family:var(--m);margin-bottom:6px}
-.portal-select{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:9px;color:var(--text);font-size:14px;font-family:var(--f);padding:11px 14px;outline:none;cursor:pointer;transition:border-color .15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B91A8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-.portal-select:focus{border-color:var(--accent)}
-.portal-select option{background:var(--surface2)}
+select.sel{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:9px;color:var(--text);font-size:14px;font-family:var(--f);padding:11px 14px;outline:none;cursor:pointer;transition:border-color .15s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238B91A8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+select.sel:focus{border-color:var(--accent)}
+select.sel option{background:var(--surface2)}
+select.sel:disabled{opacity:.4;cursor:not-allowed}
 .get-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:15px;font-weight:600;font-family:var(--f);cursor:pointer;transition:background .15s}
 .get-btn:hover{background:#2563EB}
 .get-btn:disabled{background:var(--surface2);color:var(--text3);cursor:not-allowed}
@@ -29,36 +32,94 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .result-desc{font-size:13px;color:var(--text2);line-height:1.6}
 .open-link{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:var(--gdim);border:1px solid rgba(16,185,129,.3);border-radius:8px;color:var(--green);font-size:14px;font-weight:600;font-family:var(--f);text-decoration:none;transition:background .15s}
 .open-link:hover{background:rgba(16,185,129,.15)}
-.no-link{display:flex;align-items:center;justify-content:center;padding:12px;background:var(--rdim);border:1px solid rgba(239,68,68,.25);border-radius:8px;color:var(--red);font-size:13px;font-family:var(--f);text-align:center}
+.no-link-box{padding:12px;background:var(--rdim);border:1px solid rgba(239,68,68,.25);border-radius:8px;color:var(--red);font-size:13px;font-family:var(--f);text-align:center}
 .logged-pill{display:none;align-items:center;gap:8px;padding:9px 13px;background:var(--gdim);border:1px solid rgba(16,185,129,.2);border-radius:8px;font-size:12px;font-family:var(--m);color:var(--green)}
 .logged-pill.show{display:flex}
-/* admin */
-.admin-toggle{position:fixed;bottom:20px;right:20px;padding:8px 16px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;font-size:12px;font-family:var(--m);color:var(--text3);cursor:pointer;z-index:50}
+
+/* ── ADMIN BUTTON ── */
+.admin-toggle{position:fixed;bottom:20px;right:20px;padding:8px 16px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;font-size:12px;font-family:var(--m);color:var(--text3);cursor:pointer;z-index:50;transition:all .15s}
 .admin-toggle:hover{color:var(--text);border-color:var(--accent)}
-.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;padding:20px}
-.admin-overlay.show{display:flex}
-.admin-panel{background:var(--surface);border:1px solid var(--border2);border-radius:16px 16px 0 0;width:100%;max-width:720px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
-.admin-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px;flex-wrap:wrap}
+
+/* ── OVERLAYS ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex}
+.overlay.bottom{align-items:flex-end;justify-content:center}
+
+/* ── LOGIN MODAL ── */
+.login-box{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:28px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:16px}
+.login-box h2{font-size:17px;font-weight:600}
+.login-box p{font-size:13px;color:var(--text2)}
+.inp{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--f);padding:10px 12px;outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--accent)}
+.login-err{font-size:12px;color:var(--red);font-family:var(--m);display:none}
+.login-err.show{display:block}
+.login-btns{display:flex;gap:8px;justify-content:flex-end}
+.btn{padding:8px 16px;font-size:13px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;font-family:var(--f)}
+.btn:hover{background:var(--surface);color:var(--text)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:#2563EB}
+
+/* ── ADMIN PANEL ── */
+.admin-panel{background:var(--surface);border:1px solid var(--border2);border-radius:16px 16px 0 0;width:100%;max-width:780px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.admin-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:10px;flex-wrap:wrap}
 .admin-head h2{font-size:15px;font-weight:600}
 .atabs{display:flex;gap:2px;background:var(--surface2);border-radius:6px;padding:3px}
-.atab{padding:5px 14px;font-size:12px;font-weight:500;color:var(--text2);border-radius:5px;cursor:pointer;border:none;background:transparent;font-family:var(--f)}
+.atab{padding:5px 13px;font-size:12px;font-weight:500;color:var(--text2);border-radius:5px;cursor:pointer;border:none;background:transparent;font-family:var(--f);transition:all .15s}
 .atab.active{background:var(--surface);color:var(--text);border:1px solid var(--border2)}
 .close-btn{padding:6px 12px;font-size:12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--f)}
 .close-btn:hover{color:var(--text)}
 .admin-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
-.item-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface2)}
-.item-tag{font-size:10px;font-family:var(--m);padding:2px 7px;border-radius:4px;background:var(--adim);color:var(--accent);flex-shrink:0}
-.item-info{flex:1;min-width:0}
-.item-name{font-size:13px;font-weight:500}
-.item-meta{font-size:11px;font-family:var(--m);margin-top:2px}
-.item-meta.has{color:var(--green)}
-.item-meta.none{color:var(--text3)}
-.item-btns{display:flex;gap:6px;flex-shrink:0}
-.item-btns button{padding:5px 10px;font-size:12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--f)}
-.item-btns button:hover{background:var(--surface);color:var(--text)}
-.item-btns button.del:hover{background:var(--rdim);color:var(--red);border-color:rgba(239,68,68,.3)}
+
+/* doc tree */
+.cat-block{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.cat-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--surface2);cursor:pointer;user-select:none}
+.cat-head-left{display:flex;align-items:center;gap:10px}
+.cat-name{font-size:13px;font-weight:600}
+.cat-count{font-size:11px;font-family:var(--m);color:var(--text3)}
+.cat-arrow{font-size:10px;color:var(--text3);transition:transform .2s}
+.cat-arrow.open{transform:rotate(90deg)}
+.cat-actions{display:flex;gap:6px}
+.cat-body{display:none;border-top:1px solid var(--border)}
+.cat-body.open{display:block}
+
+.subcat-block{border-bottom:1px solid var(--border)}
+.subcat-block:last-child{border-bottom:none}
+.subcat-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px 9px 28px;background:var(--surface);cursor:pointer;user-select:none}
+.subcat-head-left{display:flex;align-items:center;gap:8px}
+.subcat-name{font-size:12px;font-weight:500;color:var(--text2)}
+.subcat-arrow{font-size:9px;color:var(--text3);transition:transform .2s}
+.subcat-arrow.open{transform:rotate(90deg)}
+.subcat-body{display:none;border-top:1px solid var(--border)}
+.subcat-body.open{display:block}
+
+.doc-item{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 42px;border-bottom:1px solid var(--border)}
+.doc-item:last-child{border-bottom:none}
+.doc-item:hover{background:var(--surface2)}
+.doc-item-info{flex:1;min-width:0}
+.doc-item-name{font-size:12px;font-weight:500}
+.doc-item-link{font-size:10px;font-family:var(--m);margin-top:1px}
+.doc-item-link.has{color:var(--green)}
+.doc-item-link.none{color:var(--text3)}
+.doc-item-btns{display:flex;gap:5px;flex-shrink:0}
+.doc-item-btns button{padding:4px 9px;font-size:11px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--f)}
+.doc-item-btns button:hover{background:var(--surface);color:var(--text)}
+.doc-item-btns button.del:hover{background:var(--rdim);color:var(--red);border-color:rgba(239,68,68,.3)}
+
+.sm-add-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;font-size:11px;border:1px dashed var(--border2);border-radius:6px;color:var(--text3);cursor:pointer;background:transparent;font-family:var(--f);margin:8px 14px 8px 28px}
+.sm-add-btn:hover{border-color:var(--accent);color:var(--accent)}
+.sm-add-btn.doc-level{margin-left:42px}
+
 .add-btn{padding:11px;border:1px dashed var(--border2);border-radius:8px;text-align:center;font-size:13px;color:var(--text3);cursor:pointer;background:transparent;font-family:var(--f)}
 .add-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* drivers */
+.item-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--surface2)}
+.item-av{width:30px;height:30px;border-radius:7px;background:var(--adim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--m);flex-shrink:0}
+.item-name{flex:1;font-size:13px;font-weight:500}
+.item-del{padding:5px 10px;font-size:12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-family:var(--f)}
+.item-del:hover{background:var(--rdim);color:var(--red);border-color:rgba(239,68,68,.3)}
+
+/* log */
 .log-table{width:100%;border-collapse:collapse;font-size:12px}
 .log-table th{text-align:left;padding:8px 10px;font-size:11px;font-family:var(--m);color:var(--text3);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
 .log-table td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
@@ -69,43 +130,62 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .log-empty{padding:24px;text-align:center;color:var(--text3);font-size:13px;font-family:var(--m)}
 .clear-btn{padding:7px 14px;font-size:12px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-family:var(--f);align-self:flex-end}
 .clear-btn:hover{color:var(--red);border-color:rgba(239,68,68,.3)}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px)}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:22px;width:340px;display:flex;flex-direction:column;gap:12px}
-.modal h3{font-size:15px;font-weight:600}
+
+/* settings */
+.sc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.sc-head{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600}
+.sc-body{padding:14px;display:flex;flex-direction:column;gap:10px}
 .form-row{display:flex;flex-direction:column;gap:5px}
 .form-row label{font-size:12px;color:var(--text3);font-family:var(--m)}
-.form-row input{background:var(--surface2);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-size:13px;font-family:var(--f);padding:8px 11px;outline:none}
+.form-row input{background:var(--bg);border:1px solid var(--border2);border-radius:7px;color:var(--text);font-size:13px;font-family:var(--f);padding:8px 11px;outline:none}
 .form-row input:focus{border-color:var(--accent)}
+.save-btn{padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:600;font-family:var(--f);cursor:pointer;align-self:flex-start}
+.save-btn:hover{background:#2563EB}
+
+/* modal */
+.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:22px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
+.modal-box h3{font-size:15px;font-weight:600}
 .modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-.modal-btns button{padding:8px 16px;font-size:13px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);cursor:pointer;font-family:var(--f)}
-.modal-btns button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 </style>
 </head>
 <body>
 
+<!-- ══ DRIVER PORTAL ══ -->
 <div class="portal">
-  <div class="portal-box">
-    <div class="portal-logo">
-      <div class="portal-icon">DC</div>
-      <div>
-        <div class="portal-title">Driver Connect</div>
-        <div class="portal-sub">document portal</div>
-      </div>
+  <div class="card">
+    <div class="logo-row">
+      <div class="logo-icon">DC</div>
+      <div><div class="logo-title">Driver Connect</div><div class="logo-sub">document portal</div></div>
     </div>
     <div class="divider"></div>
 
     <div>
       <div class="field-label">SELECT YOUR NAME</div>
-      <select class="portal-select" id="driverSelect">
+      <select class="sel" id="driverSelect">
         <option value="">— Choose your name —</option>
       </select>
     </div>
 
     <div>
+      <div class="field-label">SELECT CATEGORY</div>
+      <select class="sel" id="catSelect" disabled>
+        <option value="">— Choose a category —</option>
+      </select>
+    </div>
+
+    <div>
+      <div class="field-label">SELECT SUBCATEGORY</div>
+      <select class="sel" id="subcatSelect" disabled>
+        <option value="">— Choose a subcategory —</option>
+      </select>
+    </div>
+
+    <div>
       <div class="field-label">SELECT DOCUMENT</div>
-      <select class="portal-select" id="docSelect">
+      <select class="sel" id="docSelect" disabled>
         <option value="">— Choose a document —</option>
       </select>
     </div>
@@ -116,16 +196,32 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
       <div class="result-name" id="resultName"></div>
       <div class="result-desc" id="resultDesc"></div>
       <a class="open-link" id="openLink" href="#" target="_blank">&#8599; Open Document in Google Drive</a>
-      <div class="no-link" id="noLink" style="display:none">This document has not been linked yet. Please contact dispatch.</div>
+      <div class="no-link-box" id="noLinkBox" style="display:none">This document has not been linked yet. Please contact dispatch.</div>
     </div>
-
-    <div class="logged-pill" id="loggedPill">&#10003; &nbsp;Request logged</div>
+    <div class="logged-pill" id="loggedPill">&#10003;&nbsp; Request logged</div>
   </div>
 </div>
 
-<button class="admin-toggle" id="adminToggle">Admin Panel</button>
+<!-- Admin button -->
+<button class="admin-toggle" id="adminToggle">&#x1F512; Admin</button>
 
-<div class="admin-overlay" id="adminOverlay">
+<!-- ══ LOGIN OVERLAY ══ -->
+<div class="overlay" id="loginOverlay">
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <p>Enter your username and password to access the admin panel.</p>
+    <div class="form-row"><label>USERNAME</label><input class="inp" id="loginUser" placeholder="admin" autocomplete="off"></div>
+    <div class="form-row"><label>PASSWORD</label><input class="inp" id="loginPass" type="password" placeholder="••••••••"></div>
+    <div class="login-err" id="loginErr">Incorrect username or password.</div>
+    <div class="login-btns">
+      <button class="btn" id="loginCancel">Cancel</button>
+      <button class="btn primary" id="loginSubmit">Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
+<div class="overlay bottom" id="adminOverlay">
   <div class="admin-panel">
     <div class="admin-head">
       <h2>Admin Panel</h2>
@@ -134,48 +230,127 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
           <button class="atab active" data-atab="docs">Documents</button>
           <button class="atab" data-atab="drivers">Drivers</button>
           <button class="atab" data-atab="log">Request Log</button>
+          <button class="atab" data-atab="settings">Settings</button>
         </div>
-        <button class="close-btn" id="closeAdmin">Close</button>
+        <button class="close-btn" id="closeAdmin">Logout</button>
       </div>
     </div>
     <div class="admin-body" id="adminBody"></div>
   </div>
 </div>
 
-<div id="modalRoot"></div>
+<!-- Modal root -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox"></div>
+</div>
 
 <script>
-let docs=[
-  {id:1,name:"Driver Safety Checklist",type:"Safety",driveLink:"",desc:"Pre-trip and post-trip safety checklist covering tires, brakes, lights, mirrors, cargo, and emergency equipment."},
-  {id:2,name:"Hours of Service Policy",type:"Compliance",driveLink:"",desc:"FMCSA-aligned HOS policy: 11-hour driving limit, 14-hour window, 30-min break, 70-hour/8-day rules."},
-  {id:3,name:"Accident Report Form",type:"Incident",driveLink:"",desc:"Complete within 24 hours of any accident. Covers driver info, vehicle, location, parties, witnesses, and damage."},
-  {id:4,name:"Vehicle Inspection Report",type:"Maintenance",driveLink:"",desc:"DVIR form for vehicle defects. Required before and after each trip. Submit to dispatch if defects found."},
-  {id:5,name:"Drug and Alcohol Policy",type:"Compliance",driveLink:"",desc:"Zero-tolerance policy. Pre-employment, random, post-accident testing, and return-to-duty procedures."},
-];
-let drivers=[
-  {id:1,name:"Mike Torres"},
-  {id:2,name:"Sara Lim"},
-  {id:3,name:"James Kim"},
-  {id:4,name:"Ana Reyes"},
-];
-let log=[];
-let activeTab='docs';
+// ── Default credentials (change in Settings tab) ──
+let ADMIN_USER = 'admin';
+let ADMIN_PASS = 'admin123';
+let isLoggedIn = false;
+let activeTab = 'docs';
 
-function initSelects(){
-  const ds=document.getElementById('driverSelect');
-  const dcs=document.getElementById('docSelect');
-  const curD=ds.value, curDoc=dcs.value;
-  ds.innerHTML='<option value="">— Choose your name —</option>'+drivers.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
-  dcs.innerHTML='<option value="">— Choose a document —</option>'+docs.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
-  if(curD)ds.value=curD;
-  if(curDoc)dcs.value=curDoc;
+// ── Data ──
+let categories = [
+  {
+    id:1, name:'Safety & Compliance',
+    subcats:[
+      {id:11, name:'Pre-Trip', docs:[
+        {id:111,name:'Driver Safety Checklist',driveLink:'',desc:'Pre-trip and post-trip safety checklist covering tires, brakes, lights, mirrors, cargo, and emergency equipment.'},
+        {id:112,name:'Vehicle Inspection Report (DVIR)',driveLink:'',desc:'Required before and after each trip. Submit to dispatch if safety-affecting defects are found.'},
+      ]},
+      {id:12, name:'Policies', docs:[
+        {id:121,name:'Hours of Service Policy',driveLink:'',desc:'FMCSA-aligned HOS policy: 11-hour driving, 14-hour window, 30-min break, 70-hour/8-day rules.'},
+        {id:122,name:'Drug and Alcohol Policy',driveLink:'',desc:'Zero-tolerance policy. Pre-employment, random, post-accident testing, return-to-duty procedures.'},
+      ]},
+    ]
+  },
+  {
+    id:2, name:'Incident & Accidents',
+    subcats:[
+      {id:21, name:'Reporting Forms', docs:[
+        {id:211,name:'Accident Report Form',driveLink:'',desc:'Complete within 24 hours. Driver info, vehicle, location, parties, witnesses, damage description.'},
+        {id:212,name:'Near Miss Report',driveLink:'',desc:'Report any near miss or close call incident for safety review and prevention.'},
+      ]},
+      {id:22, name:'Insurance', docs:[
+        {id:221,name:'Insurance Certificate',driveLink:'',desc:'Current insurance certificate for the vehicle. Required at roadside inspections.'},
+      ]},
+    ]
+  },
+  {
+    id:3, name:'Operations',
+    subcats:[
+      {id:31, name:'Load Documents', docs:[
+        {id:311,name:'Bill of Lading Template',driveLink:'',desc:'Standard bill of lading form for documenting shipment details and cargo.'},
+        {id:312,name:'Load Confirmation Form',driveLink:'',desc:'Confirms load pickup details, delivery address, and special instructions.'},
+      ]},
+      {id:32, name:'HR & Payroll', docs:[
+        {id:321,name:'Timesheet Form',driveLink:'',desc:'Weekly timesheet for logging hours worked, trips completed, and overtime.'},
+        {id:322,name:'Expense Claim Form',driveLink:'',desc:'Submit fuel, meals, and other approved work expenses for reimbursement.'},
+      ]},
+    ]
+  },
+];
+
+let drivers = [
+  {id:1,name:'Mike Torres'},
+  {id:2,name:'Sara Lim'},
+  {id:3,name:'James Kim'},
+  {id:4,name:'Ana Reyes'},
+];
+let log = [];
+
+// ── Helpers ──
+function getCat(cid){return categories.find(c=>c.id===cid);}
+function getSubcat(cid,sid){const c=getCat(cid);return c?.subcats.find(s=>s.id===sid);}
+function getDoc(cid,sid,did){const s=getSubcat(cid,sid);return s?.docs.find(d=>d.id===did);}
+function newId(){return Date.now()+Math.floor(Math.random()*1000);}
+
+// ── Portal selects ──
+function initDriverSelect(){
+  const sel=document.getElementById('driverSelect');
+  sel.innerHTML='<option value="">— Choose your name —</option>'+drivers.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
 }
-
+function initCatSelect(){
+  const sel=document.getElementById('catSelect');
+  sel.innerHTML='<option value="">— Choose a category —</option>'+categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  sel.disabled=false;
+  document.getElementById('subcatSelect').innerHTML='<option value="">— Choose a subcategory —</option>';
+  document.getElementById('subcatSelect').disabled=true;
+  document.getElementById('docSelect').innerHTML='<option value="">— Choose a document —</option>';
+  document.getElementById('docSelect').disabled=true;
+  checkBtn();
+}
+function initSubcatSelect(cid){
+  const cat=getCat(cid);
+  const sel=document.getElementById('subcatSelect');
+  sel.innerHTML='<option value="">— Choose a subcategory —</option>'+(cat?cat.subcats.map(s=>`<option value="${s.id}">${s.name}</option>`).join(''):'');
+  sel.disabled=!cat;
+  document.getElementById('docSelect').innerHTML='<option value="">— Choose a document —</option>';
+  document.getElementById('docSelect').disabled=true;
+  checkBtn();
+}
+function initDocSelect(cid,sid){
+  const sub=getSubcat(cid,sid);
+  const sel=document.getElementById('docSelect');
+  sel.innerHTML='<option value="">— Choose a document —</option>'+(sub?sub.docs.map(d=>`<option value="${d.id}">${d.name}</option>`).join(''):'');
+  sel.disabled=!sub;
+  checkBtn();
+}
 function checkBtn(){
-  document.getElementById('getBtn').disabled=!document.getElementById('driverSelect').value||!document.getElementById('docSelect').value;
+  const d=document.getElementById('driverSelect').value;
+  const doc=document.getElementById('docSelect').value;
+  document.getElementById('getBtn').disabled=!d||!doc;
 }
 
-document.getElementById('driverSelect').addEventListener('change',()=>{checkBtn();hideResult();});
+document.getElementById('driverSelect').addEventListener('change',()=>{if(this.value)initCatSelect();checkBtn();hideResult();});
+document.getElementById('driverSelect').addEventListener('change',function(){if(this.value)initCatSelect();else{document.getElementById('catSelect').disabled=true;}checkBtn();hideResult();});
+document.getElementById('catSelect').addEventListener('change',function(){initSubcatSelect(parseInt(this.value));hideResult();});
+document.getElementById('subcatSelect').addEventListener('change',function(){
+  const cid=parseInt(document.getElementById('catSelect').value);
+  initDocSelect(cid,parseInt(this.value));hideResult();
+});
 document.getElementById('docSelect').addEventListener('change',()=>{checkBtn();hideResult();});
 
 function hideResult(){
@@ -185,28 +360,71 @@ function hideResult(){
 
 document.getElementById('getBtn').addEventListener('click',()=>{
   const driverId=parseInt(document.getElementById('driverSelect').value);
-  const docId=parseInt(document.getElementById('docSelect').value);
+  const cid=parseInt(document.getElementById('catSelect').value);
+  const sid=parseInt(document.getElementById('subcatSelect').value);
+  const did=parseInt(document.getElementById('docSelect').value);
   const driver=drivers.find(d=>d.id===driverId);
-  const doc=docs.find(d=>d.id===docId);
+  const doc=getDoc(cid,sid,did);
+  const cat=getCat(cid);
+  const sub=getSubcat(cid,sid);
   if(!driver||!doc)return;
 
   document.getElementById('resultName').textContent=doc.name;
   document.getElementById('resultDesc').textContent=doc.desc;
   const link=document.getElementById('openLink');
-  const noLink=document.getElementById('noLink');
+  const noLink=document.getElementById('noLinkBox');
   if(doc.driveLink){link.href=doc.driveLink;link.style.display='flex';noLink.style.display='none';}
-  else{link.style.display='none';noLink.style.display='flex';}
+  else{link.style.display='none';noLink.style.display='block';}
   document.getElementById('result').classList.add('show');
   document.getElementById('loggedPill').classList.add('show');
 
-  log.push({driver:driver.name,doc:doc.name,found:!!doc.driveLink,time:new Date().toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})});
+  log.push({
+    driver:driver.name,
+    cat:cat?.name||'',
+    subcat:sub?.name||'',
+    doc:doc.name,
+    found:!!doc.driveLink,
+    time:new Date().toLocaleString([],{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+  });
 });
 
-// Admin
-document.getElementById('adminToggle').addEventListener('click',()=>{document.getElementById('adminOverlay').classList.add('show');renderTab();});
-document.getElementById('closeAdmin').addEventListener('click',()=>{document.getElementById('adminOverlay').classList.remove('show');});
-document.getElementById('adminOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('adminOverlay'))document.getElementById('adminOverlay').classList.remove('show');});
+// ── Admin login ──
+document.getElementById('adminToggle').addEventListener('click',()=>{
+  if(isLoggedIn){openAdminPanel();return;}
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginErr').classList.remove('show');
+  document.getElementById('loginOverlay').classList.add('show');
+  setTimeout(()=>document.getElementById('loginUser').focus(),100);
+});
+document.getElementById('loginCancel').addEventListener('click',()=>{document.getElementById('loginOverlay').classList.remove('show');});
+document.getElementById('loginSubmit').addEventListener('click',doLogin);
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value;
+  if(u===ADMIN_USER&&p===ADMIN_PASS){
+    isLoggedIn=true;
+    document.getElementById('loginOverlay').classList.remove('show');
+    openAdminPanel();
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+    document.getElementById('loginPass').value='';
+  }
+}
+
+function openAdminPanel(){
+  document.getElementById('adminOverlay').classList.add('show');
+  renderTab();
+}
+
+document.getElementById('closeAdmin').addEventListener('click',()=>{
+  isLoggedIn=false;
+  document.getElementById('adminOverlay').classList.remove('show');
+});
+
+// ── Admin tabs ──
 document.querySelectorAll('.atab').forEach(t=>{
   t.addEventListener('click',()=>{
     document.querySelectorAll('.atab').forEach(x=>x.classList.remove('active'));
@@ -216,80 +434,229 @@ document.querySelectorAll('.atab').forEach(t=>{
 
 function renderTab(){
   const body=document.getElementById('adminBody');
-  if(activeTab==='docs'){
-    body.innerHTML=docs.map(d=>`
-      <div class="item-row">
-        <span class="item-tag">${d.type}</span>
-        <div class="item-info">
-          <div class="item-name">${d.name}</div>
-          <div class="item-meta ${d.driveLink?'has':'none'}">${d.driveLink?'Drive link added':'No Drive link yet'}</div>
-        </div>
-        <div class="item-btns">
-          <button onclick="openDocModal(${d.id})">Edit</button>
-          <button class="del" onclick="deleteDoc(${d.id})">Remove</button>
-        </div>
-      </div>`).join('')+`<button class="add-btn" onclick="openDocModal(null)">+ Add document</button>`;
-  } else if(activeTab==='drivers'){
-    body.innerHTML=drivers.map(d=>`
-      <div class="item-row">
-        <div class="item-info"><div class="item-name">${d.name}</div></div>
-        <div class="item-btns"><button class="del" onclick="deleteDriver(${d.id})">Remove</button></div>
-      </div>`).join('')+`<button class="add-btn" onclick="openDriverModal()">+ Add driver</button>`;
-  } else {
-    if(!log.length){body.innerHTML='<div class="log-empty">No requests yet</div>';return;}
-    body.innerHTML=`<button class="clear-btn" onclick="clearLog()">Clear log</button>
-      <table class="log-table">
-        <thead><tr><th>Driver</th><th>Document</th><th>Time</th><th>Status</th></tr></thead>
-        <tbody>${[...log].reverse().map(e=>`<tr><td>${e.driver}</td><td>${e.doc}</td><td>${e.time}</td><td><span class="${e.found?'s-ok':'s-miss'}">${e.found?'SENT':'NO LINK'}</span></td></tr>`).join('')}</tbody>
-      </table>`;
-  }
+  if(activeTab==='docs') renderDocsTab(body);
+  else if(activeTab==='drivers') renderDriversTab(body);
+  else if(activeTab==='log') renderLogTab(body);
+  else if(activeTab==='settings') renderSettingsTab(body);
 }
 
+// ── Docs tab ──
+function renderDocsTab(body){
+  let html='';
+  categories.forEach(cat=>{
+    const totalDocs=cat.subcats.reduce((a,s)=>a+s.docs.length,0);
+    html+=`<div class="cat-block" id="cat-${cat.id}">
+      <div class="cat-head" onclick="toggleCat(${cat.id})">
+        <div class="cat-head-left">
+          <span class="cat-arrow" id="cat-arrow-${cat.id}">&#9654;</span>
+          <span class="cat-name">${cat.name}</span>
+          <span class="cat-count">${totalDocs} docs</span>
+        </div>
+        <div class="cat-actions" onclick="event.stopPropagation()">
+          <button class="doc-item-btns" style="all:unset"><button style="padding:4px 9px;font-size:11px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--f)" onclick="renameCat(${cat.id})">Rename</button></button>
+          <button style="padding:4px 9px;font-size:11px;border-radius:5px;border:1px solid rgba(239,68,68,.3);background:transparent;color:var(--red);cursor:pointer;font-family:var(--f)" onclick="deleteCat(${cat.id})">Remove</button>
+        </div>
+      </div>
+      <div class="cat-body" id="cat-body-${cat.id}">`;
+    cat.subcats.forEach(sub=>{
+      html+=`<div class="subcat-block">
+        <div class="subcat-head" onclick="toggleSubcat(${cat.id},${sub.id})">
+          <div class="subcat-head-left">
+            <span class="subcat-arrow" id="sub-arrow-${sub.id}">&#9654;</span>
+            <span class="subcat-name">${sub.name}</span>
+            <span class="cat-count" style="margin-left:4px">${sub.docs.length} docs</span>
+          </div>
+          <div onclick="event.stopPropagation();event.preventDefault()" style="display:flex;gap:5px">
+            <button style="padding:3px 8px;font-size:11px;border-radius:5px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--f)" onclick="renameSubcat(${cat.id},${sub.id})">Rename</button>
+            <button style="padding:3px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(239,68,68,.3);background:transparent;color:var(--red);cursor:pointer;font-family:var(--f)" onclick="deleteSubcat(${cat.id},${sub.id})">Remove</button>
+          </div>
+        </div>
+        <div class="subcat-body" id="sub-body-${sub.id}">`;
+      sub.docs.forEach(doc=>{
+        html+=`<div class="doc-item">
+          <div class="doc-item-info">
+            <div class="doc-item-name">${doc.name}</div>
+            <div class="doc-item-link ${doc.driveLink?'has':'none'}">${doc.driveLink?'Drive link added':'No Drive link yet'}</div>
+          </div>
+          <div class="doc-item-btns">
+            <button onclick="openDocModal(${cat.id},${sub.id},${doc.id})">Edit</button>
+            <button class="del" onclick="deleteDocItem(${cat.id},${sub.id},${doc.id})">Remove</button>
+          </div>
+        </div>`;
+      });
+      html+=`<button class="sm-add-btn doc-level" onclick="openDocModal(${cat.id},${sub.id},null)">+ Add document</button>
+        </div></div>`;
+    });
+    html+=`<button class="sm-add-btn" onclick="addSubcat(${cat.id})">+ Add subcategory</button>
+      </div></div>`;
+  });
+  html+=`<button class="add-btn" onclick="addCategory()">+ Add category</button>`;
+  body.innerHTML=html;
+}
+
+function toggleCat(id){
+  document.getElementById('cat-body-'+id).classList.toggle('open');
+  document.getElementById('cat-arrow-'+id).classList.toggle('open');
+}
+function toggleSubcat(cid,sid){
+  document.getElementById('sub-body-'+sid).classList.toggle('open');
+  document.getElementById('sub-arrow-'+sid).classList.toggle('open');
+}
+
+// ── Drivers tab ──
+function renderDriversTab(body){
+  body.innerHTML=drivers.map(d=>{
+    const ini=(d.name.split(' ').map(p=>p[0]).join('')).toUpperCase().slice(0,2);
+    return`<div class="item-row">
+      <div class="item-av">${ini}</div>
+      <div class="item-name">${d.name}</div>
+      <button class="item-del" onclick="deleteDriver(${d.id})">Remove</button>
+    </div>`;
+  }).join('')+`<button class="add-btn" onclick="openDriverModal()">+ Add driver</button>`;
+}
+
+// ── Log tab ──
+function renderLogTab(body){
+  if(!log.length){body.innerHTML='<div class="log-empty">No requests yet</div>';return;}
+  body.innerHTML=`<button class="clear-btn" onclick="clearLog()">Clear log</button>
+    <table class="log-table">
+      <thead><tr><th>Driver</th><th>Category</th><th>Subcategory</th><th>Document</th><th>Time</th><th>Status</th></tr></thead>
+      <tbody>${[...log].reverse().map(e=>`<tr>
+        <td>${e.driver}</td><td>${e.cat}</td><td>${e.subcat}</td><td>${e.doc}</td><td>${e.time}</td>
+        <td><span class="${e.found?'s-ok':'s-miss'}">${e.found?'SENT':'NO LINK'}</span></td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+}
 function clearLog(){log=[];renderTab();}
 
-function openDocModal(id){
-  const doc=id?docs.find(d=>d.id===id):null;
-  document.getElementById('modalRoot').innerHTML=`<div class="overlay"><div class="modal">
-    <h3>${doc?'Edit':'Add'} Document</h3>
-    <div class="form-row"><label>DOCUMENT NAME</label><input id="mn" value="${doc?.name||''}" placeholder="e.g. Load Confirmation Form"></div>
-    <div class="form-row"><label>CATEGORY</label><input id="mt" value="${doc?.type||''}" placeholder="e.g. Operations"></div>
-    <div class="form-row"><label>GOOGLE DRIVE SHARE LINK</label><input id="ml" value="${doc?.driveLink||''}" placeholder="https://drive.google.com/file/d/..."></div>
-    <div class="form-row"><label>SHORT DESCRIPTION</label><input id="md" value="${doc?.desc||''}" placeholder="What does this document contain?"></div>
-    <div class="modal-btns">
-      <button onclick="document.getElementById('modalRoot').innerHTML=''">Cancel</button>
-      <button class="primary" onclick="saveDoc(${id||'null'})">Save</button>
-    </div></div></div>`;
+// ── Settings tab ──
+function renderSettingsTab(body){
+  body.innerHTML=`<div class="sc">
+    <div class="sc-head">Change Admin Password</div>
+    <div class="sc-body">
+      <div class="form-row"><label>USERNAME</label><input class="inp" id="newUser" value="${ADMIN_USER}"></div>
+      <div class="form-row"><label>NEW PASSWORD</label><input class="inp" id="newPass" type="password" placeholder="New password"></div>
+      <div class="form-row"><label>CONFIRM PASSWORD</label><input class="inp" id="confPass" type="password" placeholder="Confirm password"></div>
+      <div style="font-size:12px;color:var(--red);font-family:var(--m);display:none" id="passErr"></div>
+      <button class="save-btn" onclick="saveCredentials()">Save credentials</button>
+    </div>
+  </div>`;
 }
-function saveDoc(id){
-  const name=document.getElementById('mn').value.trim();
-  if(!name)return;
-  const obj={name,type:document.getElementById('mt').value.trim()||'General',driveLink:document.getElementById('ml').value.trim(),desc:document.getElementById('md').value.trim()||name};
-  if(id){const d=docs.find(x=>x.id===id);if(d)Object.assign(d,obj);}
-  else docs.push({id:Date.now(),...obj});
-  document.getElementById('modalRoot').innerHTML='';
-  renderTab();initSelects();
+function saveCredentials(){
+  const u=document.getElementById('newUser').value.trim();
+  const p=document.getElementById('newPass').value;
+  const c=document.getElementById('confPass').value;
+  const err=document.getElementById('passErr');
+  if(!u){err.textContent='Username cannot be empty.';err.style.display='block';return;}
+  if(p&&p!==c){err.textContent='Passwords do not match.';err.style.display='block';return;}
+  ADMIN_USER=u;
+  if(p)ADMIN_PASS=p;
+  err.style.display='none';
+  alert('Credentials updated! You will need to log in again next time.');
 }
-function deleteDoc(id){docs=docs.filter(d=>d.id!==id);renderTab();initSelects();}
 
+// ── Modal helper ──
+function showModal(html){
+  document.getElementById('modalBox').innerHTML=html;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+
+// ── Category actions ──
+function addCategory(){
+  showModal(`<h3>Add Category</h3>
+    <div class="form-row"><label>CATEGORY NAME</label><input class="inp" id="m1" placeholder="e.g. HR Documents"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCat(null)">Add</button></div>`);
+}
+function renameCat(id){
+  const cat=getCat(id);
+  showModal(`<h3>Rename Category</h3>
+    <div class="form-row"><label>CATEGORY NAME</label><input class="inp" id="m1" value="${cat.name}"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCat(${id})">Save</button></div>`);
+}
+function saveCat(id){
+  const name=document.getElementById('m1').value.trim();
+  if(!name)return;
+  if(id){const c=getCat(id);if(c)c.name=name;}
+  else categories.push({id:newId(),name,subcats:[]});
+  closeModal();renderTab();initCatSelect();
+}
+function deleteCat(id){
+  if(!confirm('Remove this category and all its documents?'))return;
+  categories=categories.filter(c=>c.id!==id);
+  renderTab();initCatSelect();
+}
+
+// ── Subcategory actions ──
+function addSubcat(cid){
+  showModal(`<h3>Add Subcategory</h3>
+    <div class="form-row"><label>SUBCATEGORY NAME</label><input class="inp" id="m1" placeholder="e.g. Forms"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveSubcat(${cid},null)">Add</button></div>`);
+}
+function renameSubcat(cid,sid){
+  const sub=getSubcat(cid,sid);
+  showModal(`<h3>Rename Subcategory</h3>
+    <div class="form-row"><label>SUBCATEGORY NAME</label><input class="inp" id="m1" value="${sub.name}"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveSubcat(${cid},${sid})">Save</button></div>`);
+}
+function saveSubcat(cid,sid){
+  const name=document.getElementById('m1').value.trim();
+  if(!name)return;
+  const cat=getCat(cid);if(!cat)return;
+  if(sid){const s=getSubcat(cid,sid);if(s)s.name=name;}
+  else cat.subcats.push({id:newId(),name,docs:[]});
+  closeModal();renderTab();
+}
+function deleteSubcat(cid,sid){
+  if(!confirm('Remove this subcategory and all its documents?'))return;
+  const cat=getCat(cid);if(!cat)return;
+  cat.subcats=cat.subcats.filter(s=>s.id!==sid);
+  renderTab();
+}
+
+// ── Document actions ──
+function openDocModal(cid,sid,did){
+  const doc=did?getDoc(cid,sid,did):null;
+  showModal(`<h3>${doc?'Edit':'Add'} Document</h3>
+    <div class="form-row"><label>DOCUMENT NAME</label><input class="inp" id="m1" value="${doc?.name||''}" placeholder="e.g. Expense Claim Form"></div>
+    <div class="form-row"><label>GOOGLE DRIVE SHARE LINK</label><input class="inp" id="m2" value="${doc?.driveLink||''}" placeholder="https://drive.google.com/file/d/..."></div>
+    <div class="form-row"><label>DESCRIPTION</label><input class="inp" id="m3" value="${doc?.desc||''}" placeholder="What does this document contain?"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveDocItem(${cid},${sid},${did||'null'})">Save</button></div>`);
+}
+function saveDocItem(cid,sid,did){
+  const name=document.getElementById('m1').value.trim();
+  if(!name)return;
+  const obj={name,driveLink:document.getElementById('m2').value.trim(),desc:document.getElementById('m3').value.trim()||name};
+  const sub=getSubcat(cid,sid);if(!sub)return;
+  if(did){const d=sub.docs.find(x=>x.id===did);if(d)Object.assign(d,obj);}
+  else sub.docs.push({id:newId(),...obj});
+  closeModal();renderTab();
+}
+function deleteDocItem(cid,sid,did){
+  const sub=getSubcat(cid,sid);if(!sub)return;
+  sub.docs=sub.docs.filter(d=>d.id!==did);
+  renderTab();
+}
+
+// ── Driver actions ──
 function openDriverModal(){
-  document.getElementById('modalRoot').innerHTML=`<div class="overlay"><div class="modal">
-    <h3>Add Driver</h3>
-    <div class="form-row"><label>FULL NAME</label><input id="dn" placeholder="e.g. John Smith"></div>
-    <div class="modal-btns">
-      <button onclick="document.getElementById('modalRoot').innerHTML=''">Cancel</button>
-      <button class="primary" onclick="saveDriver()">Add</button>
-    </div></div></div>`;
+  showModal(`<h3>Add Driver</h3>
+    <div class="form-row"><label>FULL NAME</label><input class="inp" id="m1" placeholder="e.g. John Smith"></div>
+    <div class="modal-btns"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveDriver()">Add</button></div>`);
 }
 function saveDriver(){
-  const name=document.getElementById('dn').value.trim();
+  const name=document.getElementById('m1').value.trim();
   if(!name)return;
-  drivers.push({id:Date.now(),name});
-  document.getElementById('modalRoot').innerHTML='';
-  renderTab();initSelects();
+  drivers.push({id:newId(),name});
+  closeModal();renderTab();initDriverSelect();
 }
-function deleteDriver(id){drivers=drivers.filter(d=>d.id!==id);renderTab();initSelects();}
+function deleteDriver(id){
+  drivers=drivers.filter(d=>d.id!==id);
+  renderTab();initDriverSelect();
+}
 
-initSelects();
+// ── Init ──
+initDriverSelect();
 </script>
 </body>
 </html>
